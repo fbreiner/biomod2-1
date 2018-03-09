@@ -153,19 +153,16 @@ BIOMOD_cv <-
         DataSplitTable <- cbind(DataSplitTable.x, DataSplitTable.y)
       }
       if (stratify == "block") {
-        DataSplitTable <- as.data.frame(matrix(NA, nrow(data@coord), 4))
-        DataSplitTable[, 1] <- data@coord[, 1] < median(data@coord[balance, 
-                                                                   1]) & data@coord[, 2] < median(data@coord[balance, 
-                                                                                                             2])
-        DataSplitTable[, 2] <- data@coord[, 1] < median(data@coord[balance, 
-                                                                   1]) & data@coord[, 2] > median(data@coord[balance, 
-                                                                                                             2])
-        DataSplitTable[, 3] <- data@coord[, 1] > median(data@coord[balance, 
-                                                                   1]) & data@coord[, 2] < median(data@coord[balance, 
-                                                                                                             2])
-        DataSplitTable[, 4] <- data@coord[, 1] > median(data@coord[balance, 
-                                                                   1]) & data@coord[, 2] > median(data@coord[balance, 
-                                                                                                             2])
+        DataSplitTable <- as.data.frame(matrix(NA, nrow(data@coord), 
+                                             4))
+
+        blocks<-ENMeval::get.block(data@coord[data@data.species==1,],
+                                 data@coord[data@data.species==0,])
+      
+        for(i in 1:4){
+          DataSplitTable[data@data.species == 1,i] <-  blocks[[1]]!=i     
+          DataSplitTable[data@data.species == 0,i] <-  blocks[[2]]!=i     
+        }
       }
       if (stratify != "block" & stratify != "x" & stratify != 
           "y" & stratify != "both") {
