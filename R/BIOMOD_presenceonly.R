@@ -161,7 +161,7 @@ BIOMOD_presenceonly <- function(modeling.output = NULL, EM.output = NULL, bg.env
       myBiomodProjFF <- get_predictions(EM.output,as.data.frame=T)  
 
     if(!is.null(bg.env)){
-      myBiomodProjFF.pres <- as.data.frame(myBiomodProjFF[myResp==1,])
+      myBiomodProjFF.pres <- as.data.frame(myBiomodProjFF)[myResp==1,]
       colnames(myBiomodProjFF.pres) <- colnames(myBiomodProjFF)
       myBiomodProjFF <- BIOMOD_EnsembleForecasting(
         proj.name = paste(modeling.output@modeling.id,"cv_EF_bg",sep="_"), 
