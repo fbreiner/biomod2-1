@@ -191,7 +191,7 @@ tuning.maxent <-
         bg.val <- bg[group.data$bg.grp != k, ]
         x <- rbind(train.val, bg.val)
         p <- c(rep(1, nrow(train.val)), rep(0, nrow(bg.val)))
-        mod <- maxent::maxent(x, p, args = maxent.args[[i]], factors = categoricals, 
+        mod <- dismo::maxent(x, p, args = maxent.args[[i]], factors = categoricals, 
                               path = tmpfolder)
         ### Specify dismo!!! Problems with biomod!
         AUC.TEST[k] <- dismo::evaluate(test.val, bg, mod)@auc
